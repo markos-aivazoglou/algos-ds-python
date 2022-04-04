@@ -31,17 +31,22 @@ class BinarySearchTree:
             self.left = self.left.remove(value) if self.left else None
         elif value > self.value:
             self.right = self.right.remove(value) if self.right else None
-
-        if self.left is None and self.right is None:
-            self = None
-        elif self.left is None:
-            self = self.right
-        elif self.right is None:
-            self = self.left
         else:
-            self.value = self.right.min()
-            self.right.remove(self.value)
+            if self.left is None and self.right is None:
+                return None
+            elif self.right is None:
+                self.replace(self.left)
+            elif self.left is None:
+                self.replace(self.right)
+            else:
+                self.value = self.right.min()
+                self.right = self.right.remove(self.value)
         return self
+
+    def replace(self, node):
+        self.value = node.value
+        self.left = node.left
+        self.right = node.right
 
     def min(self):
         return self.left.min() if self.left else self.value
@@ -54,16 +59,27 @@ class BinarySearchTree:
 
 
 if __name__ == "__main__":
-    bst = BinarySearchTree(5)
-    bst.insert(58)
-    bst.insert(3)
-    bst.insert(7)
+    bst = BinarySearchTree(10)
+    # bst.insert(2)
+    # bst.insert(3)
+    # bst.insert(4)
+    # print(bst)
+    # bst.remove(1)
+    bst.insert(15)
     bst.insert(2)
-    bst.insert(4)
-    bst.insert(6)
-    bst.insert(8)
+    bst.insert(5)
+    bst.insert(13)
+    bst.insert(22)
     bst.insert(1)
-    print(bst.contains(4))
-    print(bst.contains(5))
-    bst.remove(5)
+    bst.insert(14)
+    bst.insert(12)
+    print(bst)
+    # print(bst.contains(4))
+    # print(bst.contains(5))
+    # bst.remove(10)
+    # bst.remove(1)
+    # print(bst.contains(5))
+    # print(bst.contains(10))
+    # print(bst.contains(15))
+    bst.remove(10)
     print(bst)
